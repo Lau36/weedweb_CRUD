@@ -1,1 +1,21 @@
 CREATE DATABASE weedwebCRUD;
+
+CREATE TABLE users(
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(320) NOT NULL UNIQUE,
+    phoneNumber NUMERIC NOT NULL,
+    password VARCHAR(20) NOT NULL,
+);
+
+CREATE TABLE person(
+    id SERIAL PRIMARY KEY,
+    national_id NUMERIC NOT NULL UNIQUE,
+    name VARCHAR(40) NOT NULL,
+    lastName VARCHAR(60) NOT NULL,
+);
+
+CREATE TABLE company(
+    id SERIAL PRIMARY KEY,
+    nit VARCHAR(11) NOT NULL UNIQUE,
+    companyName VARCHAR(60) NOT NULL,
+);
