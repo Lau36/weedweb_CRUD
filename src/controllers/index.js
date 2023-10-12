@@ -67,7 +67,6 @@ export const updatePerson = (
 
 export const createCompany = (nit, companyName, email, phoneNumber, password) =>
   addDoc(collection(db, "users"), {
-    nit: nit,
     companyName: companyName,
     lastName: lastName,
     email: email,
@@ -75,7 +74,7 @@ export const createCompany = (nit, companyName, email, phoneNumber, password) =>
     password: password,
   });
 
-export const pdateCompany = (
+export const updateCompany = (
   id,
   nit,
   companyName,
