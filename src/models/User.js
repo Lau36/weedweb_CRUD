@@ -20,7 +20,7 @@ export const User = sequelize.define(
       unique: true,
     },
     phone_number: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DOUBLE,
       unique: true,
     },
   },
@@ -31,15 +31,6 @@ export const User = sequelize.define(
 );
 
 //ForeingKey
-User.hasOne(Company, {
-  foreingKey: "userID",
-  sourceKey: "id",
-});
-
-Company.belongsTo(User, {
-  foreingKey: "userID",
-  sourceKey: "id",
-});
 
 User.hasOne(Person, {
   foreingKey: "userID",
