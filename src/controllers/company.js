@@ -2,11 +2,11 @@ import { Company } from "../models/Company.js";
 
 export const createCompany = async (req, res) => {
   try {
-    const { nit, company_name, userId } = req.body;
+    const { userId, nit, company_name } = req.body;
     const newCompany = await Company.create({
+      userId,
       nit,
       company_name,
-      userId,
     });
     res.json(newCompany);
   } catch (error) {

@@ -42,13 +42,15 @@ export const getUsers = async (req, res) => {
 
 export async function signIn(req, res) {
   const { id } = req.params;
+  const { password, email } = req.body;
   try {
     const user = await User.findOne({
       where: {
-        id,
+        password: password,
+        email: email,
       },
     });
-    res.json(user);
+    res.status(201).json({ message: "SignIn succesfull", user });
   } catch (error) {
     res.status(500).json({
       message: error.message,

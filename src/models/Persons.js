@@ -4,10 +4,9 @@ import { sequelize } from "../database/database.js";
 export const Person = sequelize.define(
   "person",
   {
-    id: {
+    userId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true,
       unique: true,
     },
     national_id: {

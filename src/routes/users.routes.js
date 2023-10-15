@@ -12,7 +12,7 @@ import {
 router.post("/user", createUsers);
 router.get("/users", getUsers);
 router.get("/user/:id", getUSER);
-router.get("/user/:id", signIn);
+router.get("/userSignIn", signIn);
 router.put("/user/:id", updateUser);
 router.delete("/user/:id", deleteUser);
 

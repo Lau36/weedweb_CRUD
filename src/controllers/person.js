@@ -26,7 +26,7 @@ export const createPerson = async (req, res) => {
   //   }
 
   try {
-    const { national_id, name, last_name, userId } = req.body;
+    const { userId, national_id, name, last_name } = req.body;
     const newPerson = await Person.create({
       userId,
       national_id,
