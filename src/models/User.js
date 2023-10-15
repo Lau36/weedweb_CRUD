@@ -1,8 +1,7 @@
+import { Person } from "./Persons.js";
+import { Company } from "./Company.js";
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
-import { Company } from "./Company.js";
-import { Person } from "./Persons.js";
-
 export const User = sequelize.define(
   "users",
   {
@@ -30,14 +29,22 @@ export const User = sequelize.define(
   }
 );
 
-//ForeingKey
-
 User.hasOne(Person, {
-  foreingKey: "userID",
+  foreingKey: "userId",
   sourceKey: "id",
 });
 
 Person.belongsTo(User, {
-  foreingKey: "userID",
+  foreingKey: "userId",
+  sourceKey: "id",
+});
+
+User.hasOne(Company, {
+  foreingKey: "userId",
+  sourceKey: "id",
+});
+
+Company.belongsTo(User, {
+  foreingKey: "userId",
   sourceKey: "id",
 });
