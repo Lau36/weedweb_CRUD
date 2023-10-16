@@ -1,14 +1,27 @@
 import { Company } from "../models/Company.js";
+import { User } from "../models/User.js";
+import bcrypt from "bcrypt";
 
 export const createCompany = async (req, res) => {
   try {
-    const { userId, nit, company_name } = req.body;
+    const { password, email, phone_number, nit, company_name } = req.body;
+
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const newUser = await User.create({
+      password: hashedPassword,
+      email,
+      phone_number,
+    });
+
     const newCompany = await Company.create({
-      userId,
+      userId: newUser.id,
       nit,
       company_name,
     });
-    res.json(newCompany);
+    res
+      .status(201)
+      .json({ message: "User and company created!", newUser, newCompany });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

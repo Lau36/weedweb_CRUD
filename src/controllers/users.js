@@ -20,7 +20,7 @@ export const createUsers = async (req, res) => {
         email,
         phone_number,
       });
-      res.send(newUser);
+      res.status(201).json({ message: "User created!", newUser });
     }
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -41,16 +41,23 @@ export const getUsers = async (req, res) => {
 };
 
 export async function signIn(req, res) {
-  const { id } = req.params;
   const { password, email } = req.body;
   try {
     const user = await User.findOne({
       where: {
-        password: password,
         email: email,
       },
     });
-    res.status(201).json({ message: "SignIn succesfull", user });
+    if (user) {
+      const isMatch = bcrypt.compareSync(password, user?.password);
+      if (isMatch) {
+        res.status(201).json({ message: "SignIn succesfull", user });
+      } else {
+        res.status(403).json({ message: "Credentials incorrect" });
+      }
+    } else {
+      res.status(404).json({ message: "No such user found" });
+    }
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -66,27 +73,24 @@ export async function getUSER(req, res) {
         id,
       },
     });
-    const person = await Person.findOne({
-      where: {
-        userId: id,
-      },
-    });
-    const company = await Company.findOne({
-      where: {
-        userId: id,
-      },
-    });
-
     if (user) {
+      const person = await Person.findByPk(id);
       if (person) {
         res
           .status(201)
           .json({ message: "This is the user person", user, person });
       } else {
-        res
-          .status(201)
-          .json({ message: "This is the user company", user, company });
+        const company = await Company.findByPk(id);
+        if (company) {
+          res
+            .status(201)
+            .json({ message: "This is the user company", user, company });
+        } else {
+          res.status(404).json({ message: "This user do not exist" });
+        }
       }
+    } else {
+      res.status(404).json({ message: "No such user found" });
     }
   } catch (error) {
     res.status(500).json({
@@ -103,12 +107,8 @@ export const deleteUser = async (req, res) => {
         id,
       },
     });
-    const person = await Person.findOne({
-      where: {
-        userId: id,
-      },
-    });
     if (user) {
+      const person = await Person.findByPk(id);
       if (person) {
         await Person.destroy({
           where: {
@@ -116,17 +116,24 @@ export const deleteUser = async (req, res) => {
           },
         });
       } else {
-        await Company.destroy({
-          where: {
-            userId: id,
-          },
-        });
+        const company = await Company.findByPk(id);
+        if (company) {
+          await Company.destroy({
+            where: {
+              userId: id,
+            },
+          });
+        } else {
+          res.status(404).json({ message: "User not found" });
+        }
       }
       await User.destroy({
         where: {
           id,
         },
       });
+    } else {
+      res.status(404).json({ message: "No such user found" });
     }
     return res.sendStatus(204);
   } catch (error) {

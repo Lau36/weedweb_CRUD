@@ -1,54 +1,31 @@
 import { Person } from "../models/Persons.js";
 import { createUsers } from "./users.js";
+import { User } from "../models/User.js";
+import bcrypt from "bcrypt";
 
-export const createPerson = async (req, res) => {
-  //   try {
-  //     const { national_id, name, last_name, userId } = req.body;
-  //     const user = await createUsers(password, email, phone_number);
-  //     if (user) {
-  //       const newPerson = await Person.create({
-  //         userId: user.id,
-  //         national_id,
-  //         name,
-  //         last_name,
-  //       });
-  //       res.json(newPerson);
-  //     }
-  //     const newPerson = await Person.create({
-  //       userId,
-  //       national_id,
-  //       name,
-  //       last_name,
-  //     });
-  //     res.json(newPerson);
-  //   } catch (error) {
-  //     return res.status(500).json({ message: error.message });
-  //   }
-
+export const createUserAndPerson = async (req, res) => {
   try {
-    const { userId, national_id, name, last_name } = req.body;
+    const { password, email, phone_number, national_id, name, last_name } =
+      req.body;
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const newUser = await User.create({
+      password: hashedPassword,
+      email,
+      phone_number,
+    });
+
     const newPerson = await Person.create({
-      userId,
+      userId: newUser.id,
       national_id,
       name,
       last_name,
     });
-    res.json(newPerson);
+    res
+      .status(201)
+      .json({ message: "User and person created!", newUser, newPerson });
   } catch (error) {
     return res.status(500).json({ message: error.message });
-  }
-};
-
-export const getAllPersons = async (req, res) => {
-  try {
-    const persons = await Person.findAll({
-      atributes: ["id", "national_id", "name", "last_name", "userID"],
-    });
-    res.json(persons);
-  } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
   }
 };
 
