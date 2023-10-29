@@ -7,7 +7,6 @@ import {
 } from "../controllers/person.js";
 
 router.post("/person", createUserAndPerson);
-// router.get("/persons", getAllPersons);
 router.put("/person/:id", updatePerson);
 router.delete("/person/:id", deletePerson);
 

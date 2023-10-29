@@ -13,34 +13,24 @@ export const createCompany = async (req, res) => {
       email,
       phone_number,
     });
-
     const newCompany = await Company.create({
       userId: newUser.id,
       nit,
       company_name,
     });
-    res
-      .status(201)
-      .json({ message: "User and company created!", newUser, newCompany });
+    const tokenCompany = jwt.sign(
+      { userId: newUser.id },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "20d",
+      }
+    );
+    res.status(201).json({
+      message: "User and company created!",
+      tokenCompany,
+    });
   } catch (error) {
     return res.status(500).json({ message: error.message });
-  }
-};
-
-export const getCompany = (req, res) => {
-  res.send("getting company");
-};
-
-export const getAllCompanies = async (req, res) => {
-  try {
-    const companies = await Company.findAll({
-      atributes: ["id", "nit", "company_name", "userID"],
-    });
-    res.json(companies);
-  } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
   }
 };
 

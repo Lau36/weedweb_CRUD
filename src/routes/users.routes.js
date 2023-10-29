@@ -1,19 +1,16 @@
 import { Router } from "express";
+import { checkAuth } from "../middlewares/auth.js";
 const router = Router();
 import {
   createUsers,
-  getUsers,
   updateUser,
   deleteUser,
   getUSER,
-  signIn,
 } from "../controllers/users.js";
 
 router.post("/user", createUsers);
-router.get("/users", getUsers);
-router.get("/user/:id", getUSER);
-router.get("/userSignIn", signIn);
-router.put("/user/:id", updateUser);
-router.delete("/user/:id", deleteUser);
+router.get("/user", checkAuth, getUSER);
+router.put("/user/:id", checkAuth, updateUser);
+router.delete("/user/:id", checkAuth, deleteUser);
 
 export default router;

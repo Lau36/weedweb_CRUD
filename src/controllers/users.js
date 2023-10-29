@@ -1,7 +1,8 @@
+import { verifyAccessToken } from "../helpers/generateToken.js";
 import { Company } from "../models/Company.js";
 import { Person } from "../models/Persons.js";
 import { User } from "../models/User.js";
-import bcrypt from "bcrypt";
+import bcrypt, { compare } from "bcrypt";
 
 export const createUsers = async (req, res) => {
   try {
@@ -40,47 +41,21 @@ export const getUsers = async (req, res) => {
   }
 };
 
-export async function signIn(req, res) {
-  const { password, email } = req.body;
-  try {
-    const user = await User.findOne({
-      where: {
-        email: email,
-      },
-    });
-    if (user) {
-      const isMatch = bcrypt.compareSync(password, user?.password);
-      if (isMatch) {
-        res.status(201).json({ message: "SignIn succesfull", user });
-      } else {
-        res.status(403).json({ message: "Credentials incorrect" });
-      }
-    } else {
-      res.status(404).json({ message: "No such user found" });
-    }
-  } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
-  }
-}
-
 export async function getUSER(req, res) {
-  const { id } = req.params;
+  const { token } = req.headers;
+  const tokenSession = await verifyAccessToken(token);
+  const { userId } = tokenSession;
+  console.log(userId);
   try {
-    const user = await User.findOne({
-      where: {
-        id,
-      },
-    });
+    const user = await User.findByPk(userId);
     if (user) {
-      const person = await Person.findByPk(id);
+      const person = await Person.findByPk(userId);
       if (person) {
         res
           .status(201)
           .json({ message: "This is the user person", user, person });
       } else {
-        const company = await Company.findByPk(id);
+        const company = await Company.findByPk(userId);
         if (company) {
           res
             .status(201)

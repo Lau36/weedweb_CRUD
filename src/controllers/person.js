@@ -21,9 +21,7 @@ export const createUserAndPerson = async (req, res) => {
       name,
       last_name,
     });
-    res
-      .status(201)
-      .json({ message: "User and person created!", newUser, newPerson });
+    res.status(201).json({ message: "User and person created!" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
