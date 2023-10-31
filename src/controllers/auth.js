@@ -69,9 +69,7 @@ export const tokenRefresh = async (req, res) => {
 export async function logout(req, res) {
   const { token } = req.headers;
   try {
-    const alreadyExist = await TokenDB.findOne({
-      where: { tokenRefresh: token },
-    });
+    const alreadyExist = await TokenDB.findByPk(token);
     if (alreadyExist) res.status(400).json({ message: "Token in blacklist" });
     const savedToken = await TokenDB.create({ tokenRefresh: token });
     if (savedToken) {

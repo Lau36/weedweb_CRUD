@@ -1,4 +1,5 @@
 import { Company } from "../models/Company.js";
+import { verifyAccessToken } from "../helpers/generateToken.js";
 import { User } from "../models/User.js";
 import bcrypt from "bcrypt";
 
@@ -18,16 +19,9 @@ export const createCompany = async (req, res) => {
       nit,
       company_name,
     });
-    const tokenCompany = jwt.sign(
-      { userId: newUser.id },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "20d",
-      }
-    );
     res.status(201).json({
       message: "User and company created!",
-      tokenCompany,
+      newCompany,
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -37,12 +31,31 @@ export const createCompany = async (req, res) => {
 export const updateCompany = async (req, res) => {
   try {
     const { id } = req.params;
-    const { nit, company_name } = req.body;
-    const company = await Company.findByPk(id);
-    person.nit = nit;
-    person.company_name = company_name;
-    await company.save();
-    res.status(200).json({ message: "Person updated", company });
+    const { token } = req.headers;
+    const tokenSession = await verifyAccessToken(token);
+    const { userId } = tokenSession;
+    if (id == userId) {
+      const { password, email, phone_number, nit, company_name } = req.body;
+      const user = await User.findByPk(id);
+      if (user) {
+        const company = await Company.findByPk(id);
+        if (company) {
+          user.password = password;
+          user.email = email;
+          user.phone_number = phone_number;
+          await user.save();
+          company.nit = nit;
+          company.company_name = company_name;
+          await company.save();
+          res.status(200).json({ message: "Person updated", company });
+        } else {
+          res.status(400).json({ message: "This person doesn´t exits" });
+        }
+        res.status(400).json({ message: "This user doesn´t exits" });
+      }
+    } else {
+      res.status(500).json({ message: "you don´t have permits" });
+    }
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

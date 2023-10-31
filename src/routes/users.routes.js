@@ -4,13 +4,13 @@ const router = Router();
 import {
   createUsers,
   updateUser,
-  deleteUser,
+  getUsers,
   getUSER,
 } from "../controllers/users.js";
 
 router.post("/user", createUsers);
-router.get("/user", checkAuth, getUSER);
+router.get("/user/:id", checkAuth, getUSER);
+router.get("/users", getUsers);
 router.put("/user/:id", checkAuth, updateUser);
-router.delete("/user/:id", checkAuth, deleteUser);
 
 export default router;
