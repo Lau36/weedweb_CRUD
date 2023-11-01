@@ -41,13 +41,22 @@ export async function getUSER(req, res) {
         if (person) {
           res
             .status(201)
-            .json({ message: "This is the user person", user, person });
+            .json({
+              email: user.email,
+              national_id: person.national_id,
+              personName: person.name,
+              personLastName: person.last_name,
+            });
         } else {
           const company = await Company.findByPk(userId);
           if (company) {
             res
               .status(201)
-              .json({ message: "This is the user company", user, company });
+              .json({
+                email: user.email,
+                nit: company.nit,
+                companyName: company.company_name,
+              });
           } else {
             res.status(404).json({ message: "This user do not exist" });
           }

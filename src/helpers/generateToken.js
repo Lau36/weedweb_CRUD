@@ -2,13 +2,13 @@ import jwt from "jsonwebtoken";
 
 export const tokenSignAccess = async (user) => {
   return jwt.sign({ userId: user.id }, "12262331", {
-    expiresIn: "1h",
+    expiresIn: "60s",
   });
 };
 
 export const tokenSignRefresh = async (user) => {
   return jwt.sign({ userId: user.id }, "1226", {
-    expiresIn: "2h",
+    expiresIn: "3600s",
   });
 };
 

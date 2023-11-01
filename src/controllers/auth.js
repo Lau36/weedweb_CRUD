@@ -57,7 +57,6 @@ export const tokenRefresh = async (req, res) => {
     } catch (error) {
       res.status(400).json({ message: "Something goes worng", error });
     }
-
     const newAccessToken = await tokenSignAccess(user);
     const newRefreshToken = await tokenSignRefresh(user);
     res.status(201).json({ message: "OK", newAccessToken, newRefreshToken });
@@ -70,10 +69,13 @@ export async function logout(req, res) {
   const { token } = req.headers;
   try {
     const alreadyExist = await TokenDB.findByPk(token);
-    if (alreadyExist) res.status(400).json({ message: "Token in blacklist" });
-    const savedToken = await TokenDB.create({ tokenRefresh: token });
-    if (savedToken) {
-      res.status(200).json({ token });
+    if (alreadyExist) {
+      res.status(400).json({ message: "Token in blacklist" });
+    } else {
+      const savedToken = await TokenDB.create({ tokenRefresh: token });
+      if (savedToken) {
+        res.status(200).json({ message: "Token saved", token });
+      }
     }
   } catch (error) {
     res.status(400).json({ message: "Something goes worng", error });

@@ -7,7 +7,7 @@ import {
 } from "../controllers/company.js";
 import { checkAuth } from "../middlewares/auth.js";
 
-router.post("/company", createCompany);
-router.put("/company/:id", checkAuth, updateCompany);
+router.post("/users/api/company", createCompany);
+router.put("/users/api/company/:id", checkAuth, updateCompany);
 
 export default router;

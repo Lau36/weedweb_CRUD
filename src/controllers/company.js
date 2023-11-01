@@ -35,16 +35,14 @@ export const updateCompany = async (req, res) => {
     const tokenSession = await verifyAccessToken(token);
     const { userId } = tokenSession;
     if (id == userId) {
-      const { password, email, phone_number, nit, company_name } = req.body;
+      const { email, phone_number, company_name } = req.body;
       const user = await User.findByPk(id);
       if (user) {
         const company = await Company.findByPk(id);
         if (company) {
-          user.password = password;
           user.email = email;
           user.phone_number = phone_number;
           await user.save();
-          company.nit = nit;
           company.company_name = company_name;
           await company.save();
           res.status(200).json({ message: "Person updated", company });

@@ -8,9 +8,9 @@ import {
   getUSER,
 } from "../controllers/users.js";
 
-router.post("/user", createUsers);
-router.get("/user/:id", checkAuth, getUSER);
-router.get("/users", getUsers);
-router.put("/user/:id", checkAuth, updateUser);
+router.post("/users/api", createUsers);
+router.get("/users/api/:id", checkAuth, getUSER);
+//router.get("/users/api/", getUsers);
+router.put("/users/api/:id", checkAuth, updateUser);
 
 export default router;

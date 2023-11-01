@@ -19,7 +19,7 @@ export const User = sequelize.define(
       unique: true,
     },
     phone_number: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.CHAR,
       unique: true,
     },
   },
