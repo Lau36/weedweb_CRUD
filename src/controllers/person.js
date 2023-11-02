@@ -3,7 +3,7 @@ import { verifyAccessToken } from "../helpers/generateToken.js";
 import { User } from "../models/User.js";
 import bcrypt from "bcrypt";
 
-export const createUserAndPerson = async (req, res) => {
+export const createPerson = async (req, res) => {
   try {
     const { password, email, phone_number, national_id, name, last_name } =
       req.body;
@@ -34,8 +34,7 @@ export const updatePerson = async (req, res) => {
     const tokenSession = await verifyAccessToken(token);
     const { userId } = tokenSession;
     if (id == userId) {
-      const { password, email, phone_number, national_id, name, last_name } =
-        req.body;
+      const { password, email, phone_number, name, last_name } = req.body;
       const user = await User.findByPk(id);
       if (user) {
         const person = await Person.findByPk(id);
@@ -44,7 +43,6 @@ export const updatePerson = async (req, res) => {
           user.email = email;
           user.phone_number = phone_number;
           await user.save();
-          person.national_id = national_id;
           person.name = name;
           person.last_name = last_name;
           await person.save();

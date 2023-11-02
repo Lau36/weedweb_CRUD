@@ -45,29 +45,15 @@ export const updateCompany = async (req, res) => {
           await user.save();
           company.company_name = company_name;
           await company.save();
-          res.status(200).json({ message: "Person updated", company });
+          res.status(200).json({ message: "Company updated", company });
         } else {
-          res.status(400).json({ message: "This person doesn´t exits" });
+          res.status(400).json({ message: "This company doesn´t exits" });
         }
         res.status(400).json({ message: "This user doesn´t exits" });
       }
     } else {
       res.status(500).json({ message: "you don´t have permits" });
     }
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-};
-
-export const deleteCompany = async (req, res) => {
-  try {
-    const { id } = req.params;
-    await Company.destroy({
-      where: {
-        id,
-      },
-    });
-    res.status(200).json({ message: "Company deleted" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

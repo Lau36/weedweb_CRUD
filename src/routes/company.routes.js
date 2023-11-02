@@ -1,10 +1,6 @@
 import { Router } from "express";
 const router = Router();
-import {
-  createCompany,
-  deleteCompany,
-  updateCompany,
-} from "../controllers/company.js";
+import { createCompany, updateCompany } from "../controllers/company.js";
 import { checkAuth } from "../middlewares/auth.js";
 
 router.post("/users/api/company", createCompany);

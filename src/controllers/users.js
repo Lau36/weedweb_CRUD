@@ -11,7 +11,6 @@ export const createUsers = async (req, res) => {
       where: { email: email },
     });
     if (existingUser) {
-      // Si ya existe un usuario con el mismo email, devuelve un error
       return res.status(400).json({ message: "El email ya está en uso." });
     } else {
       const saltRounds = 10;
@@ -39,24 +38,20 @@ export async function getUSER(req, res) {
       if (user) {
         const person = await Person.findByPk(userId);
         if (person) {
-          res
-            .status(201)
-            .json({
-              email: user.email,
-              national_id: person.national_id,
-              personName: person.name,
-              personLastName: person.last_name,
-            });
+          res.status(201).json({
+            email: user.email,
+            national_id: person.national_id,
+            personName: person.name,
+            personLastName: person.last_name,
+          });
         } else {
           const company = await Company.findByPk(userId);
           if (company) {
-            res
-              .status(201)
-              .json({
-                email: user.email,
-                nit: company.nit,
-                companyName: company.company_name,
-              });
+            res.status(201).json({
+              email: user.email,
+              nit: company.nit,
+              companyName: company.company_name,
+            });
           } else {
             res.status(404).json({ message: "This user do not exist" });
           }
@@ -119,33 +114,5 @@ export const deleteUser = async (req, res) => {
     }
   } else {
     res.status(401).json({ message: "You don´t have this permits" });
-  }
-};
-
-export const updateUser = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { password, email, phone_number } = req.body;
-    const user = await User.findByPk(id);
-    user.password = password;
-    user.email = email;
-    user.phone_number = phone_number;
-    await user.save();
-    res.json(user);
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-};
-
-export const getUsers = async (req, res) => {
-  try {
-    const users = await User.findAll({
-      atributes: ["id", "password", "email", "phone_number"],
-    });
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
   }
 };
