@@ -16,24 +16,26 @@ export async function signIn(req, res) {
         email: email,
       },
     });
-    const tokenSessionAccess = await tokenSignAccess(user);
-    const tokenSessionRefresh = await tokenSignRefresh(user);
-    if (user) {
-      const isMatch = bcrypt.compareSync(password, user?.password);
-      if (isMatch) {
-        res.status(201).json({
-          message: "SignIn succesfull",
-          tokenSessionAccess,
-          tokenSessionRefresh,
-        });
-      } else {
-        res.status(403).json({ message: "Credentials incorrect" });
-      }
+
+    if (!user) {
+      return res.status(404).json({ message: "No such user found" });
+    }
+
+    const isMatch = bcrypt.compareSync(password, user.password);
+
+    if (isMatch) {
+      const tokenSessionAccess = await tokenSignAccess(user);
+      const tokenSessionRefresh = await tokenSignRefresh(user);
+      return res.status(201).json({
+        message: "SignIn successful",
+        tokenSessionAccess,
+        tokenSessionRefresh,
+      });
     } else {
-      res.status(404).json({ message: "No such user found" });
+      return res.status(403).json({ message: "Credentials incorrect" });
     }
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: error.message,
     });
   }

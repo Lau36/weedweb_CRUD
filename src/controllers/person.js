@@ -33,28 +33,33 @@ export const updatePerson = async (req, res) => {
     const { token } = req.headers;
     const tokenSession = await verifyAccessToken(token);
     const { userId } = tokenSession;
-    if (id == userId) {
-      const { password, email, phone_number, name, last_name } = req.body;
-      const user = await User.findByPk(id);
-      if (user) {
-        const person = await Person.findByPk(id);
-        if (person) {
-          user.password = password;
-          user.email = email;
-          user.phone_number = phone_number;
-          await user.save();
-          person.name = name;
-          person.last_name = last_name;
-          await person.save();
-          res.status(200).json({ message: "Person updated", person });
-        } else {
-          res.status(400).json({ message: "This person doesn´t exits" });
-        }
-        res.status(400).json({ message: "This user doesn´t exits" });
-      }
-    } else {
-      res.status(500).json({ message: "you don´t have permits" });
+
+    if (id != userId) {
+      return res.status(500).json({ message: "You don't have permissions" });
     }
+
+    const { email, phone_number, name, last_name } = req.body;
+
+    const user = await User.findByPk(id);
+    if (!user) {
+      return res.status(400).json({ message: "This user doesn't exist" });
+    }
+
+    const person = await Person.findByPk(id);
+    if (!person) {
+      return res.status(400).json({ message: "This person doesn't exist" });
+    }
+
+    // Actualizar los datos
+    user.email = email;
+    user.phone_number = phone_number;
+    await user.save();
+
+    person.name = name;
+    person.last_name = last_name;
+    await person.save();
+
+    res.status(200).json({ message: "Person updated", company });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

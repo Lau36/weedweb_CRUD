@@ -1,8 +1,5 @@
 import { sequelize } from "./database/database.js";
 import app from "./app.js";
-// import "./models/Company.js";
-// // import "./models/Persons.js";
-// import "./models/User.js";
 
 async function main() {
   try {

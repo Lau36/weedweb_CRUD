@@ -30,42 +30,47 @@ export const createUsers = async (req, res) => {
 export async function getUSER(req, res) {
   const { id } = req.params;
   const { token } = req.headers;
+  if (!token) {
+    return res.status(403).send("Token not provider");
+  }
   const tokenSession = await verifyAccessToken(token);
+  if (!tokenSession) {
+    return res.status(402).send("Invalid token");
+  }
   const { userId } = tokenSession;
-  if (id == userId) {
-    try {
-      const user = await User.findByPk(userId);
-      if (user) {
-        const person = await Person.findByPk(userId);
-        if (person) {
+  if (id != userId) {
+    return res.status(403).send("Acess decline");
+  }
+  try {
+    const user = await User.findByPk(userId);
+    if (user) {
+      const person = await Person.findByPk(userId);
+      if (person) {
+        res.status(201).json({
+          email: user.email,
+          national_id: person.national_id,
+          personName: person.name,
+          personLastName: person.last_name,
+        });
+      } else {
+        const company = await Company.findByPk(userId);
+        if (company) {
           res.status(201).json({
             email: user.email,
-            national_id: person.national_id,
-            personName: person.name,
-            personLastName: person.last_name,
+            nit: company.nit,
+            companyName: company.company_name,
           });
         } else {
-          const company = await Company.findByPk(userId);
-          if (company) {
-            res.status(201).json({
-              email: user.email,
-              nit: company.nit,
-              companyName: company.company_name,
-            });
-          } else {
-            res.status(404).json({ message: "This user do not exist" });
-          }
+          res.status(404).json({ message: "This user do not exist" });
         }
-      } else {
-        res.status(404).json({ message: "No such user found" });
       }
-    } catch (error) {
-      res.status(500).json({
-        message: error.message,
-      });
+    } else {
+      res.status(404).json({ message: "No such user found" });
     }
-  } else {
-    res.status(401).json({ message: "You don´t have this permits" });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
   }
 }
 
