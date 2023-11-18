@@ -1,32 +1,56 @@
-Para ejecutar el proyecto:
+# WeedWebCRUD:
+
+#Pasos para correr la aplicacion 
 1. Clonar el repositorio.
-2. Crear una base de datos con el nombre que desee.
-3. En la raíz del proyecto (a la altura de este README), crear un archivo .env, con
+```bash
+ git clone https://github.com/Lau36/weedweb_CRUD.git
+```
+2. Cambiarse a la rama development, preferible que pruebe todo desde su local en esta rama
+```bash
+ git checkout development
+```
+3. Crear una base de datos con el nombre y las credenciales que desee.
+```bash
+ CREATE DATABASE weedweb_CRUD;
+```
+
+4. En la raíz del proyecto (a la altura de este README), crear un archivo .env, con
+
 el siguiente código, y reemplazando donde sea necesario:
+```json
+    JWT_SECRET=<Numero de 8 digitos>
+    JWT_SECRET_REFRESH=<Numero de 4 digitos>
+    DB_NAME=<nombre de la base de datos que creó>
+    DB_PASSWORD=<contraseña de postgres>
+    DB_HOST = <El host de su db>
+    DB_USER = <Aca iria el usuario de la db>
+    PORT = <El puerto en el que correrá la aplicación>
+```
 
-JWT_SECRET=<Numero de 8 digitos>
-JWT_SECRET_REFRESH=<Numero de 4 digitos>
-DB_NAME=<nombre de la base de datos que creó>
-DB_PASSWORD=<contraseña de postgres>
+5. En una consola ejecutar:
+```bash
+    npm install
+    npm run dev 
+```
 
-4. En una consola ejecutar:
-npm install
-npm run dev 
+6. 
+Para probar los endpoints, se recomienda usar Postman o Insomnia.
 
-5. Disfrute
-
-Rutas:
+```bash
 http://localhost:4000/users/api/person : Crear persona
 http://localhost:4000/users/api/company : Crear empresa
 http://localhost:4000/users/api/SignIn : Logearse
 http://localhost:4000/users/api/tokenRefresh : Refrescar token
 http://localhost:4000/users/api/logout : Cerrar sesion
-http://localhost:4000/users/api/user/:id : actualizar persona por id
-http://localhost:4000/users/api/company/:id : actualizar empresa por id
-http://localhost:4000/users/api/:id : Info de usuario por id
+http://localhost:4000/users/api/user/id : actualizar persona por id
+http://localhost:4000/users/api/company/id : actualizar empresa por id
+http://localhost:4000/users/api/id : Info de usuario por id
+```
+# Para los endpoints de actualizar usuarios y de ver info de usuario por id
 
-Hay que mandar el token en los headers:
-token <El token que le haya generado el login>
-Y en Auth en modo bearer:
-<El token que le haya generado el login>
-¿Por qué? No sé, quejas con Laura :D
+* Hay que mandar el token de acceso en los headers:
+    token <El token que le haya generado el login>
+* Hay que mandar en auth el token de acceso en modo bearer:
+    <El token que le haya generado el login>
+
+* Para el endpoint del token de refresco es necesario pasarle por los headers el token de refresco y no el de acceso 
