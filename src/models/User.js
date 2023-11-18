@@ -17,6 +17,11 @@ export const User = sequelize.define(
     email: {
       type: DataTypes.STRING,
       unique: true,
+      validate: {
+        isEmail: {
+          msg: 'Debe ser una dirección de correo electrónico válida',
+        },
+      },
     },
     phone_number: {
       type: DataTypes.CHAR,
