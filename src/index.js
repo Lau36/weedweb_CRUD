@@ -6,8 +6,8 @@ async function main() {
     await sequelize.sync({ force: false });
     console.log("Todo correcto con la db mi papá");
 
-    const server = app.listen(10000, () => {
-      console.log("Servidor corriendo en el puerto 10000");
+    const server = app.listen(process.env.PORT, () => {
+      console.log("Servidor corriendo en el puerto ${PORT}");
     });
 
     // Captura de errores en el servidor
