@@ -69,6 +69,9 @@ export const tokenRefresh = async (req, res) => {
 
 export async function logout(req, res) {
   const { token } = req.headers;
+  if (!token) {
+    return res.status(403).send("Token not provider");
+  }
   try {
     const alreadyExist = await TokenDB.findByPk(token);
     if (alreadyExist) {

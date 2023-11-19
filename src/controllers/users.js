@@ -29,7 +29,11 @@ export const createUsers = async (req, res) => {
 
 export async function getUSER(req, res) {
   const { id } = req.params;
-  const { token } = req.headers;
+  const authorizationHeader = req.headers.authorization;
+  if (!authorizationHeader || !authorizationHeader.startsWith("Bearer ")) {
+    return res.status(403).send("Invalid or missing Authorization header");
+  }
+  const token = authorizationHeader.split(" ")[1];
   if (!token) {
     return res.status(403).send("Token not provider");
   }

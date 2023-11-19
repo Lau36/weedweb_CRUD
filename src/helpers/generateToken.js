@@ -1,11 +1,15 @@
 import jwt from "jsonwebtoken";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 
 export const tokenSignAccess = async (user) => {
-  return jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-    expiresIn: "60s",
-  });
+  return jwt.sign(
+    { userId: user.id, userName: user.username },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "60s",
+    }
+  );
 };
 
 export const tokenSignRefresh = async (user) => {

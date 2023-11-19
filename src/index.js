@@ -4,11 +4,18 @@ import app from "./app.js";
 async function main() {
   try {
     await sequelize.sync({ force: false });
-    console.log("todo correcto mi papá");
-    app.listen(4000);
-    console.log("server on port 4000");
+    console.log("Todo correcto con la db mi papá");
+
+    const server = app.listen(process.env.PORT, () => {
+      console.log("Servidor corriendo en el puerto 4000");
+    });
+
+    // Captura de errores en el servidor
+    server.on("error", (error) => {
+      console.error("Error al iniciar el servidor:", error);
+    });
   } catch (error) {
-    console.log("You have an error", error);
+    console.error("Error al sincronizar la base de datos:", error);
   }
 }
 

@@ -5,7 +5,8 @@ import bcrypt from "bcrypt";
 
 export const createCompany = async (req, res) => {
   try {
-    const { password, email, phone_number, nit, company_name } = req.body;
+    const { password, email, phone_number, username, nit, company_name } =
+      req.body;
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -13,6 +14,7 @@ export const createCompany = async (req, res) => {
       password: hashedPassword,
       email,
       phone_number,
+      username,
     });
     const newCompany = await Company.create({
       userId: newUser.id,
@@ -31,15 +33,24 @@ export const createCompany = async (req, res) => {
 export const updateCompany = async (req, res) => {
   try {
     const { id } = req.params;
-    const { token } = req.headers;
+    const authorizationHeader = req.headers.authorization;
+    if (!authorizationHeader || !authorizationHeader.startsWith("Bearer ")) {
+      return res.status(403).send("Invalid or missing Authorization header");
+    }
+    const token = authorizationHeader.split(" ")[1];
+    if (!token) {
+      return res.status(403).send("Token not provider");
+    }
     const tokenSession = await verifyAccessToken(token);
+    if (!tokenSession) {
+      return res.status(402).send("Invalid token");
+    }
     const { userId } = tokenSession;
-
     if (id != userId) {
       return res.status(500).json({ message: "You don't have permissions" });
     }
 
-    const { email, phone_number, company_name } = req.body;
+    const { email, phone_number, username, company_name } = req.body;
 
     const user = await User.findByPk(id);
     if (!user) {
@@ -54,6 +65,7 @@ export const updateCompany = async (req, res) => {
     // Actualizar los datos
     user.email = email;
     user.phone_number = phone_number;
+    user.username = username;
     await user.save();
 
     company.company_name = company_name;
