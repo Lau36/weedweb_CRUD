@@ -30,3 +30,29 @@ token <El token que le haya generado el login>
 Y en Auth en modo bearer:
 <El token que le haya generado el login>
 ¿Por qué? No sé, quejas con Laura :D
+
+
+Pa crear compañia:
+{ 
+    "password":"password", 
+    "email":"email", 
+    "phone_number":"phone_number", 
+    "nit":"nit", 
+    "company_name":"company_name"
+}
+
+Pa crear persona:
+{ 
+    "password":"password", 
+    "email":"email", 
+    "phone_number":"phone_number", 
+    "national_id":"national_id", 
+    "name":"name", 
+    "last_name":"last_name" 
+}
+
+Pa logearse:
+{ 
+  "email":"email",
+  "password":"password" 
+}
