@@ -53,7 +53,7 @@
 ## Para probar los servicios haga lo siguiente:
 
 1. Probar servicio de crear persona:
-   {
+ ` {
    "password": "12345678",
    "email": "lonera@gmail.com",
    "phone_number": "3219875671",
@@ -61,46 +61,46 @@
    "last_name": "Zuluaga Martinez",
    "national_id": "1109440313",
    "username":"lore1226"
-   }
+   }`
 
 2. Crear empresa
-   {
+   `{
    "password": "12345678",
    "email": "sigein@gmail.com",
    "phone_number": "3217924496",
    "company_name": "sigein",
    "nit": "123456789-1",
    "username":"sigein1"
-   }
+   }`
 
 3. Login
-   {
+   `{
    "password": "12345678",
    "email": "sigein1@gmail.com"
-   }
+   }`
 
 4. Disfrute :D
 
 5. Actualizar persona
 
    - Tenemos que estar autorizados para esta accion y debemos mandar el id del usuario en los parametros
-     {
+     `{
      "email": "lonera1@gmail.com",
      "phone_number": "3219875673",
      "name": "Lonera Marcela",
      "last_name": "Zuluaga Martinez",
      "username":"lore12"
-     }
+     }`
 
 6. Actualizar empresa
 
    - Tenemos que estar autorizados para esta accion y debemos mandar el id del usuario en los parametros
-     {
+     `{
      "email": "sigein1@gmail.com",
      "phone_number": "3219875672",
      "company_name": "sigein",
      "username":"sigein12"
-     }
+     }`
 
 7. Consultar info
    - Debe ser autenticado, si no se puede consultar la informacion de todos los usuarios y tambien recuerden mandar el id por los parametros
@@ -110,3 +110,4 @@
 
 9. Logout
    - Debe de mandar solo el token de refresco por los headers con el nombre "token"
+
