@@ -79,9 +79,7 @@
    "email": "sigein1@gmail.com"
    }`
 
-4. Disfrute :D
-
-5. Actualizar persona
+4. Actualizar persona
 
    - Tenemos que estar autorizados para esta accion y debemos mandar el id del usuario en los parametros
      `{
@@ -91,6 +89,8 @@
      "last_name": "Zuluaga Martinez",
      "username":"lore12"
      }`
+     
+5. Disfrute :D
 
 6. Actualizar empresa
 
