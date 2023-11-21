@@ -4,7 +4,7 @@ dotenv.config();
 
 export const tokenSignAccess = async (user) => {
   return jwt.sign(
-    { userId: user.id, userName: user.username },
+    { userId: user.id, userEmail: user.email },
     process.env.JWT_SECRET,
     {
       expiresIn: "60s",

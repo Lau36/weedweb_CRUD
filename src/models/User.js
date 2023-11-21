@@ -27,10 +27,6 @@ export const User = sequelize.define(
       type: DataTypes.CHAR,
       unique: true,
     },
-    username: {
-      type: DataTypes.CHAR,
-      unique: true,
-    },
   },
   {
     timestamp: true,
