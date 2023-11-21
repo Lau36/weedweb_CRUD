@@ -55,7 +55,7 @@
 1. Probar servicio de crear persona:
  ` {
    "password": "12345678",
-   "email": "lonera@gmail.com",
+   "email": "lorena@gmail.com",
    "phone_number": "3219875671",
    "name": "Lonera Marcela",
    "last_name": "Zuluaga Martinez",
@@ -83,7 +83,7 @@
 
    - Tenemos que estar autorizados para esta accion y debemos mandar el id del usuario en los parametros
      `{
-     "email": "lonera1@gmail.com",
+     "email": "lorena1@gmail.com",
      "phone_number": "3219875673",
      "name": "Lonera Marcela",
      "last_name": "Zuluaga Martinez",
