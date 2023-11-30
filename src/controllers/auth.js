@@ -26,10 +26,12 @@ export async function signIn(req, res) {
     if (isMatch) {
       const tokenSessionAccess = await tokenSignAccess(user);
       const tokenSessionRefresh = await tokenSignRefresh(user);
+      const emailUser = await user.email;
       return res.status(201).json({
         message: "SignIn successful",
         tokenSessionAccess,
         tokenSessionRefresh,
+        emailUser,
       });
     } else {
       return res.status(403).json({ message: "Credentials incorrect" });
@@ -42,33 +44,36 @@ export async function signIn(req, res) {
 }
 
 export const tokenRefresh = async (req, res) => {
-  const { token } = req.headers;
+  const { token } = req.body;
+  if (!token) {
+    return res.status(400).json({ message: "Token must be provided" });
+  }
+
   const tokenBuscado = await TokenDB.findOne({
     where: { tokenRefresh: token },
   });
-  if (!tokenBuscado) {
-    if (!token) {
-      res.status(400).json({ message: "Something goes worng" });
-      console.log("toy aca");
-    }
+
+  if (tokenBuscado) {
+    return res.status(400).json({ message: "Bad token" });
+  }
+
+  try {
     let user;
-    try {
-      const tokenVerified = await verifyRefreshToken(token);
-      const { userId } = tokenVerified;
-      user = await User.findByPk(userId);
-    } catch (error) {
-      res.status(400).json({ message: "Something goes worng", error });
-    }
-    const newAccessToken = await tokenSignAccess(user);
-    const newRefreshToken = await tokenSignRefresh(user);
-    res.status(201).json({ message: "OK", newAccessToken, newRefreshToken });
-  } else {
-    res.status(400).json({ message: "bad token" });
+    const tokenVerified = await verifyRefreshToken(token);
+    const { userId } = tokenVerified;
+    user = await User.findByPk(userId);
+    const tokenSessionAccess = await tokenSignAccess(user);
+    const tokenSessionRefresh = await tokenSignRefresh(user);
+    res
+      .status(201)
+      .json({ message: "OK", tokenSessionAccess, tokenSessionRefresh });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
 export async function logout(req, res) {
-  const { token } = req.headers;
+  const { token } = req.body;
   if (!token) {
     return res.status(403).send("Token not provider");
   }

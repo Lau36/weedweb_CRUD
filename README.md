@@ -53,61 +53,64 @@
 ## Para probar los servicios haga lo siguiente:
 
 1. Probar servicio de crear persona:
- ` {
-   "password": "12345678",
-   "email": "lonera@gmail.com",
-   "phone_number": "3219875671",
-   "name": "Lonera Marcela",
-   "last_name": "Zuluaga Martinez",
-   "national_id": "1109440313",
-   "username":"lore1226"
-   }`
+   `{ 
+ "password": "12345678",
+ "email": "lonera@gmail.com",
+ "phone_number": "3219875671",
+ "name": "Lonera Marcela",
+ "last_name": "Zuluaga Martinez",
+ "national_id": "1109440313"
+}`
 
 2. Crear empresa
-   `{
-   "password": "12345678",
-   "email": "sigein@gmail.com",
-   "phone_number": "3217924496",
-   "company_name": "sigein",
-   "nit": "123456789-1",
-   "username":"sigein1"
-   }`
+   `{ 
+ "password": "12345678",
+ "email": "sigein@gmail.com",
+ "phone_number": "3217924496",
+ "company_name": "sigein",
+ "nit": "123456789-1"
+}`
 
 3. Login
    `{
-   "password": "12345678",
-   "email": "sigein1@gmail.com"
-   }`
+"password": "12345678",
+"email": "sigein1@gmail.com"
+}`
 
 4. Actualizar persona
 
    - Tenemos que estar autorizados para esta accion y debemos mandar el id del usuario en los parametros
-     `{
-     "email": "lonera1@gmail.com",
-     "phone_number": "3219875673",
-     "name": "Lonera Marcela",
-     "last_name": "Zuluaga Martinez",
-     "username":"lore12"
-     }`
-     
+     `{ 
+"email": "lonera1@gmail.com",
+"phone_number": "3219875673",
+"name": "Lonera Marcela",
+"last_name": "Zuluaga Martinez"
+  }`
+
 5. Disfrute :D
 
 6. Actualizar empresa
 
    - Tenemos que estar autorizados para esta accion y debemos mandar el id del usuario en los parametros
-     `{
-     "email": "sigein1@gmail.com",
-     "phone_number": "3219875672",
-     "company_name": "sigein",
-     "username":"sigein12"
-     }`
+     `{ 
+    "email": "sigein1@gmail.com",
+    "phone_number": "3219875672",
+    "company_name": "sigein"
+}`
 
 7. Consultar info
+
    - Debe ser autenticado, si no se puede consultar la informacion de todos los usuarios y tambien recuerden mandar el id por los parametros
+
 8. TokenRefresh
 
-   - Debe de estar autorizado y mandar por los header el token de refresco con el nombre "token"
+   - Debe de estar autorizado y mandar por el body el token de refresco con el nombre "token"
+     {
+     "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsVXNlciI6InNpZ2VpbkBnbWFpbC5jb20iLCJpYXQiOjE3MDEzNzU5MzMsImV4cCI6MTcwMTQxMTkzM30.cMT9eh-Ttrdr2OhDq3tPcUwwsLFoYMg2gZxtDyoZatg"
+     }
 
 9. Logout
-   - Debe de mandar solo el token de refresco por los headers con el nombre "token"
-
+   - Debe de mandar solo el token de refresco por el body con el nombre "token"
+     {
+     "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsVXNlciI6InNpZ2VpbkBnbWFpbC5jb20iLCJpYXQiOjE3MDEzNzU5MzMsImV4cCI6MTcwMTQxMTkzM30.cMT9eh-Ttrdr2OhDq3tPcUwwsLFoYMg2gZxtDyoZatg"
+     }
