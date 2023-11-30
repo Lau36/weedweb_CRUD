@@ -99,10 +99,18 @@
 }`
 
 7. Consultar info
+
    - Debe ser autenticado, si no se puede consultar la informacion de todos los usuarios y tambien recuerden mandar el id por los parametros
+
 8. TokenRefresh
 
-   - Debe de estar autorizado y mandar por los header el token de refresco con el nombre "token"
+   - Debe de estar autorizado y mandar por el body el token de refresco con el nombre "token"
+     {
+     "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsVXNlciI6InNpZ2VpbkBnbWFpbC5jb20iLCJpYXQiOjE3MDEzNzU5MzMsImV4cCI6MTcwMTQxMTkzM30.cMT9eh-Ttrdr2OhDq3tPcUwwsLFoYMg2gZxtDyoZatg"
+     }
 
 9. Logout
-   - Debe de mandar solo el token de refresco por los headers con el nombre "token"
+   - Debe de mandar solo el token de refresco por el body con el nombre "token"
+     {
+     "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsVXNlciI6InNpZ2VpbkBnbWFpbC5jb20iLCJpYXQiOjE3MDEzNzU5MzMsImV4cCI6MTcwMTQxMTkzM30.cMT9eh-Ttrdr2OhDq3tPcUwwsLFoYMg2gZxtDyoZatg"
+     }

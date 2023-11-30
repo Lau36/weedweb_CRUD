@@ -3,18 +3,14 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const tokenSignAccess = async (user) => {
-  return jwt.sign(
-    { userId: user.id, userEmail: user.email },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: "60s",
-    }
-  );
+  return jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+    expiresIn: "5h",
+  });
 };
 
 export const tokenSignRefresh = async (user) => {
   return jwt.sign({ userId: user.id }, process.env.JWT_SECRET_REFRESH, {
-    expiresIn: "3600s",
+    expiresIn: "10h",
   });
 };
 
