@@ -41,14 +41,14 @@
 
 6. Para probar los endpoints, se recomienda usar Postman o Insomnia:
 
-   - Crear persona: `http://localhost:4000/users/api/person`
-   - Crear empresa: `http://localhost:4000/users/api/company`
-   - Logearse: `http://localhost:4000/users/api/SignIn`
-   - Refrescar token: `http://localhost:4000/users/api/tokenRefresh`
-   - Cerrar sesión: `http://localhost:4000/users/api/logout`
-   - Actualizar persona por ID: `http://localhost:4000/users/api/user/id`
-   - Actualizar empresa por ID: `http://localhost:4000/users/api/company/id`
-   - Info de usuario por ID: `http://localhost:4000/users/api/id`
+   - Crear persona: `https://weedweb-crud.onrender.com/users/api/person`
+   - Crear empresa: `https://weedweb-crud.onrender.com/users/api/company`
+   - Logearse: `https://weedweb-crud.onrender.com/users/api/SignIn`
+   - Refrescar token: `https://weedweb-crud.onrender.com/users/api/tokenRefresh`
+   - Cerrar sesión: `https://weedweb-crud.onrender.com/users/api/logout`
+   - Actualizar persona por ID: `https://weedweb-crud.onrender.com/users/api/user/id`
+   - Actualizar empresa por ID: `https://weedweb-crud.onrender.com/users/api/company/id`
+   - Info de usuario por ID: `https://weedweb-crud.onrender.com/users/api/id`
 
 ## Para probar los servicios haga lo siguiente:
 
